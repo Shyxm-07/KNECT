@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNECT - Study Materials</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('../img/bg.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Remove or comment out the body::before pattern if present */
+        body::before {
+            display: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px; /* Reduced from 1200px */
+            margin: 0 auto;
+            padding: 20px 8px; /* Reduced from 40px 20px */
+        }
+
+        /* Logo */
+        .logo {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            height: 48px !important; /* Reduced from 80px */
+        }
+
+        /* Header Title */
+        .header-title {
+            text-align: center;
+            margin-bottom: 20px; /* Reduced from 40px */
+        }
+
+        .title-btn {
+            background: linear-gradient(135deg, #e85a7a, #ff6b8a);
+            color: white;
+            padding: 8px 18px; /* Reduced from 15px 40px */
+            border-radius: 18px; /* Reduced from 30px */
+            font-weight: bold;
+            font-size: 16px; /* Reduced from 24px */
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(232, 90, 122, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .title-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(232, 90, 122, 0.4);
+        }
+
+        /* Upload Button */
+        .upload-section {
+            text-align: center;
+            margin-bottom: 25px; /* Reduced from 50px */
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #4a4a4a, #666666);
+            color: white;
+            padding: 10px 24px; /* Reduced from 18px 50px */
+            border: none;
+            border-radius: 18px; /* Reduced from 30px */
+            font-size: 12px; /* Reduced from 18px */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; /* Reduced from 12px */
+            box-shadow: 0 8px 25px rgba(74, 74, 74, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upload-btn:hover {
+            background: linear-gradient(135deg, #555555, #777777);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(74, 74, 74, 0.4);
+        }
+
+        .upload-btn::before {
+            content: '☁️';
+            font-size: 22px;
+        }
+
+        /* PDF Cards Grid */
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Reduced min width */
+            gap: 12px; /* Reduced from 25px */
+            margin-bottom: 25px; /* Reduced from 50px */
+        }
+
+        .pdf-card {
+            background: white;
+            border-radius: 8px; /* Reduced from 15px */
+            padding: 12px; /* Reduced from 25px */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: #e85a7a;
+        }
+
+        .pdf-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e85a7a, #ff6b8a);
+        }
+
+        .pdf-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ff4444, #cc3333);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            position: relative;
+        }
+
+        .pdf-icon::before {
+            content: '📄';
+            font-size: 16px;
+            color: white;
+        }
+
+        .pdf-icon::after {
+            content: 'PDF';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #cc3333;
+            color: white;
+            font-size: 6px;
+            font-weight: bold;
+            padding: 1px 2px;
+            border-radius: 3px;
+        }
+
+        .pdf-title {
+            font-size: 12px; /* Reduced from 16px */
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #2d2d2d, #444444);
+            color: white;
+            padding: 6px 12px; /* Reduced from 10px 20px */
+            border: none;
+            border-radius: 12px; /* Reduced from 20px */
+            font-size: 10px; /* Reduced from 12px */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #444444, #666666);
+            transform: translateY(-2px);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px; /* Reduced from 40px */
+            padding: 0 8px;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            width: 36px; /* Reduced from 60px */
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #2d5016, #4a7c29);
+        }
+
+        .edit-btn::before {
+            content: '📝';
+            font-size: 16px; /* Reduced from 24px */
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #e85a7a, #ff6b8a);
+        }
+
+        .back-btn::before {
+            content: '↩️';
+            font-size: 16px; /* Reduced from 24px */
+        }
+
+        .scroll-indicator {
+            background: linear-gradient(135deg, #e85a7a, #ff6b8a);
+            color: white;
+            padding: 8px 18px; /* Reduced from 15px 35px */
+            border-radius: 18px; /* Reduced from 30px */
+            font-weight: bold;
+            font-size: 12px; /* Reduced from 16px */
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Reduced from 10px */
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(232, 90, 122, 0.3);
+        }
+
+        .scroll-indicator:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(232, 90, 122, 0.4);
+        }
+
+        .scroll-indicator::after {
+            content: '⬇';
+            font-size: 12px; /* Reduced from 18px */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px 4px;
+            }
+            
+            .pdf-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .bottom-nav {
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+            
+            .title-btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            .upload-btn {
+                font-size: 10px;
+                padding: 8px 12px;
+            }
+            
+            .pdf-title {
+                font-size: 10px;
+            }
+            
+            .download-btn {
+                font-size: 8px;
+                padding: 4px 8px;
+            }
+            
+            .nav-btn {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .scroll-indicator {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .loading.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Title moved to top -->
+        <div class="header-title" style="margin-bottom: 10px;">
+            <button class="title-btn">Study Materials</button>
+        </div>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="../img/KNectlogo.png" alt="KNECT Logo">
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <button class="upload-btn">Upload Here !!</button>
+        </div>
+
+        <!-- PDF Cards Grid -->
+        <div class="pdf-grid">
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 2:Karlos Theorem-CS3251</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 2:Karlos Theorem-CS3425</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 4:Boycee law-GE-2576</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 2: Rolles Theorem</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 1:Python basics-AD3579</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 2:Pythagoras Theorem-AD2345</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 1:charles Theorem-CS3251</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+
+            <div class="pdf-card loading">
+                <div class="pdf-icon"></div>
+                <div class="pdf-title">Unit 2: Bayes Theorem-ME4352</div>
+                <button class="download-btn">Download PDF</button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-btn edit-btn"></button>
+            <button class="scroll-indicator">Scroll Down</button>
+            <button class="nav-btn back-btn"></button>
+        </div>
+    </div>
+
+    <script>
+        // Animate cards on load
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.pdf-card.loading');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 100);
+            });
+        });
+
+        // Upload functionality
+        document.querySelector('.upload-btn').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.multiple = true;
+            input.accept = '.pdf,.doc,.docx,.ppt,.pptx';
+            input.click();
+            
+            input.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    alert(`${this.files.length} file(s) selected for upload!`);
+                    // Here you would typically upload the files
+                }
+            });
+        });
+
+        // PDF Download functionality
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.parentElement.querySelector('.pdf-title').textContent;
+                
+                // Simulate download
+                this.textContent = 'Downloading...';
+                this.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                
+                setTimeout(() => {
+                    this.textContent = 'Downloaded ✓';
+                    setTimeout(() => {
+                        this.textContent = 'Download PDF';
+                        this.style.background = 'linear-gradient(135deg, #2d2d2d, #444444)';
+                    }, 2000);
+                }, 1500);
+                
+                // In a real application, you would trigger the actual download here
+                console.log('Downloading:', title);
+            });
+        });
+
+        // Card click functionality
+        document.querySelectorAll('.pdf-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.pdf-title').textContent;
+                alert('Opening: ' + title);
+            });
+        });
+
+        // Scroll down functionality
+        document.querySelector('.scroll-indicator').addEventListener('click', function() {
+            window.scrollBy({
+                top: window.innerHeight * 0.8,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navigation buttons
+        document.querySelector('.back-btn').addEventListener('click', function() {
+            if (confirm('Go back to previous page?')) {
+                window.history.back();
+            }
+        });
+
+        document.querySelector('.edit-btn').addEventListener('click', function() {
+            alert('Edit mode activated - You can now modify study materials');
+        });
+
+        // Title button
+        document.querySelector('.title-btn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.pdf-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelector('.back-btn').click();
+            }
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                document.querySelector('.upload-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>

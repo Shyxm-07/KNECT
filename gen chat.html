@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNECT - Chat Interface</title>
+    <link rel="stylesheet" href="../Knct/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url(../img/bg.jpg) center center / cover no-repeat fixed;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M20,20 Q30,10 40,20 T60,20' stroke='%23ddd' fill='none' stroke-width='1'/%3E%3Ccircle cx='80' cy='30' r='5' fill='%23e0e0e0'/%3E%3Cpath d='M10,60 L20,50 L30,60' stroke='%23ddd' fill='none' stroke-width='1'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        .logo {
+            /* Remove background, color, padding, border-radius, border */
+            background: none;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+            font-weight: normal;
+            font-size: inherit;
+            border: none;
+        }
+
+        .general-chat-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .general-chat-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #333;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 80px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            gap: 20px;
+            z-index: 5;
+        }
+
+        .sidebar-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-btn.active {
+            background: #333;
+            color: #ff6b9d;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 100px 20px 20px 20px;
+        }
+
+        /* Chat area */
+        .chat-area {
+            flex: 1;
+            background: linear-gradient(135deg, #4a9b8e, #6bb6a8);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            /* Remove scrollable option */
+            overflow-y: visible; /* Changed from auto */
+        }
+
+        .message {
+            max-width: 60%;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .message.left {
+            background: #f0e8d8;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .message.right {
+            background: #8b7355;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .message.empty {
+            background: #f0e8d8;
+            height: 60px;
+            align-self: flex-start;
+        }
+
+        /* Input area */
+        .input-area {
+            background: #333;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .emoji-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #ff6b9d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .emoji-btn:hover {
+            background: #ff6b9d;
+            transform: scale(1.1);
+        }
+
+        .message-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .message-input::placeholder {
+            color: #666;
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            background: #4a9b8e;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #6bb6a8;
+            transform: scale(1.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+        }
+
+        /* Page overlay for different sections */
+        .page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .page-content {
+            background: #f0e8d8;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .page-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .close-btn:hover {
+            background: #ff5588;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .sidebar-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .message {
+                max-width: 80%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <img src="../img/KNectlogo.png" alt="KNECT Logo" style="height:60px;">
+            </div>
+            <button class="general-chat-btn">GENERAL CHAT</button>
+            <div class="profile-btn">👤</div>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" role="navigation" aria-label="Main navigation">
+            <a href="session.html" class="sidebar-btn" data-page="video" title="Video Sessions">📹</a>
+            <a href="note.html" class="sidebar-btn" data-page="files" title="Study Materials">📝</a>
+            <a href="event.html" class="sidebar-btn" data-page="audio" title="Events and Announcements">📢</a>
+            <a href="github.html" class="sidebar-btn" data-page="github" title="Project Collabrations">🐱</a>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="message left">Drama club play Friday 🎭</div>
+                <div class="message left">Free entry?</div>
+                <div class="message empty"></div>
+                <div class="message right">Or stand again? 😒</div>
+                <div class="message right">Food stalls there?</div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <button class="emoji-btn">😊</button>
+                <input type="text" class="message-input" placeholder="Type message here...">
+                <button class="send-btn">▶</button>
+                <div class="action-buttons">
+                    <button class="action-btn">💬</button>
+                    <button class="action-btn back-btn">↩</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Sidebar button functionality
+        const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+        const pageOverlays = document.querySelectorAll('.page-overlay');
+
+        sidebarButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                sidebarButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Open corresponding page
+                const pageId = button.getAttribute('data-page') + '-page';
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.style.display = 'flex';
+                }
+            });
+        });
+
+        // Close page function
+        function closePage() {
+            pageOverlays.forEach(overlay => {
+                overlay.style.display = 'none';
+            });
+            // Remove active class from all sidebar buttons
+            sidebarButtons.forEach(btn => btn.classList.remove('active'));
+        }
+
+        // Close overlay when clicking outside content
+        pageOverlays.forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closePage();
+                }
+            });
+        });
+
+        // Send message functionality
+        const messageInput = document.querySelector('.message-input');
+        const sendBtn = document.querySelector('.send-btn');
+        const chatArea = document.querySelector('.chat-area');
+
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message right';
+                messageDiv.textContent = text;
+                chatArea.appendChild(messageDiv);
+                messageInput.value = '';
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Emoji button functionality
+        const emojiBtn = document.querySelector('.emoji-btn');
+        emojiBtn.addEventListener('click', () => {
+            // Simple emoji insertion
+            messageInput.value += '😊';
+            messageInput.focus();
+        });
+
+        // General chat button functionality
+        const generalChatBtn = document.querySelector('.general-chat-btn');
+        generalChatBtn.addEventListener('click', () => {
+            alert('Switched to General Chat!');
+        });
+
+        // Profile button functionality
+        const profileBtn = document.querySelector('.profile-btn');
+        profileBtn.addEventListener('click', () => {
+            alert('Profile settings coming soon!');
+        });
+
+        // Action buttons functionality
+        const actionBtns = document.querySelectorAll('.action-btn');
+        actionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.classList.contains('back-btn')) {
+                    alert('Going back...');
+                } else {
+                    alert('Additional chat options coming soon!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

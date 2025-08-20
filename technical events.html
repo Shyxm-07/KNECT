@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNECT - Tech Events Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', Arial, sans-serif;
+            background: url('../img/bg.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Remove SVG doodle overlay */
+        body::before {
+            display: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            background: linear-gradient(145deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 4px solid #1e40af;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .user-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #f87171, #ef4444);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            border: 4px solid #dc2626;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(248, 113, 113, 0.3);
+        }
+
+        /* Navigation Pills */
+        .nav-pills {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-pill {
+            background: linear-gradient(145deg, #f87171, #ef4444);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 4px solid #dc2626;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(248, 113, 113, 0.3);
+        }
+
+        .nav-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(248, 113, 113, 0.4);
+        }
+
+        .nav-pill.active {
+            background: linear-gradient(145deg, #10b981, #059669);
+            border-color: #047857;
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, #6b7280, #4b5563);
+            border-radius: 25px;
+            padding: 30px;
+            width: 280px;
+            box-shadow: 0 12px 24px rgba(75, 85, 99, 0.3);
+            border: 4px solid #374151;
+        }
+
+        .category-item {
+            background: #f3f4f6;
+            color: #1f2937;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .category-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(31, 41, 55, 0.2);
+            background: #e5e7eb;
+        }
+
+        .category-item:last-child {
+            margin-bottom: 20px;
+        }
+
+        .add-button {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #f87171, #ef4444);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            border: 3px solid #dc2626;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(248, 113, 113, 0.3);
+        }
+
+        .add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(248, 113, 113, 0.4);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .nav-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #6b7280, #4b5563);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            border: 4px solid #374151;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(75, 85, 99, 0.3);
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(75, 85, 99, 0.4);
+        }
+
+        .scroll-down {
+            background: linear-gradient(145deg, #f87171, #ef4444);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 4px solid #dc2626;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(248, 113, 113, 0.3);
+        }
+
+        .scroll-down:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(248, 113, 113, 0.4);
+        }
+
+        /* Detail Pages */
+        .detail-page {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .detail-page.active {
+            display: block;
+        }
+
+        .detail-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .detail-content {
+            background: linear-gradient(145deg, #6b7280, #4b5563);
+            color: white;
+            padding: 40px;
+            border-radius: 25px;
+            margin: 0 auto 30px;
+            max-width: 600px;
+            box-shadow: 0 12px 24px rgba(75, 85, 99, 0.3);
+            border: 4px solid #374151;
+        }
+
+        .detail-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #f87171;
+        }
+
+        .detail-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .back-button {
+            background: linear-gradient(145deg, #10b981, #059669);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Home Page */
+        .home-page {
+            display: block;
+        }
+
+        .home-page.hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-pills {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .nav-pill {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Home Page -->
+        <div class="home-page" id="homePage">
+            <div class="header">
+                 <img src="../img/KNectlogo.png" alt="KNECT Logo" style="height:80px;">
+                <div class="user-icon">👤</div>
+            </div>
+
+            <div class="nav-pills">
+                <div class="nav-pill" onclick="showSection('workshop')">WORKSHOP</div>
+                <div class="nav-pill" onclick="showSection('events')">EVENTS</div>
+                <div class="nav-pill" onclick="showSection('contests')">CONTESTS</div>
+            </div>
+
+            <div class="main-content">
+                <div class="category-card">
+                    <div class="category-item" onclick="showDetail('uiux')">UI/UX</div>
+                    <div class="category-item" onclick="showDetail('fullstack')">FULL STACK</div>
+                    <div class="category-item" onclick="showDetail('appdev')">APP DEVELOPMENT</div>
+                    <div class="add-button">+</div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-item" onclick="showDetail('techquiz')">TECH QUIZ</div>
+                    <div class="category-item" onclick="showDetail('hackathon')">HACKATHON</div>
+                    <div class="category-item" onclick="showDetail('codegame')">CODE GAME</div>
+                    <div class="add-button">+</div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-icon">📋</div>
+                <div class="scroll-down">SCROLL DOWN ⬇</div>
+                <div class="nav-icon">↩</div>
+            </div>
+        </div>
+
+        <!-- Detail Pages -->
+        <div class="detail-page" id="uiux">
+            <div class="detail-title">UI/UX Workshop</div>
+            <div class="detail-content">
+                <h3>User Interface & User Experience Design</h3>
+                <p>Learn the fundamentals of creating beautiful and intuitive user interfaces. This workshop covers design principles, user research, wireframing, prototyping, and usability testing.</p>
+                <p><strong>Duration:</strong> 3 days</p>
+                <p><strong>Level:</strong> Beginner to Intermediate</p>
+                <p><strong>What you'll learn:</strong> Figma, Adobe XD, Design Systems, User Research Methods</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+
+        <div class="detail-page" id="fullstack">
+            <div class="detail-title">Full Stack Development</div>
+            <div class="detail-content">
+                <h3>Complete Web Development Bootcamp</h3>
+                <p>Master both frontend and backend development. Learn to build complete web applications from scratch using modern technologies and frameworks.</p>
+                <p><strong>Duration:</strong> 6 weeks</p>
+                <p><strong>Level:</strong> Intermediate to Advanced</p>
+                <p><strong>Technologies:</strong> React, Node.js, Express, MongoDB, PostgreSQL</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+
+        <div class="detail-page" id="appdev">
+            <div class="detail-title">App Development</div>
+            <div class="detail-content">
+                <h3>Mobile Application Development</h3>
+                <p>Build native and cross-platform mobile applications. Learn iOS and Android development using modern frameworks and tools.</p>
+                <p><strong>Duration:</strong> 4 weeks</p>
+                <p><strong>Level:</strong> Intermediate</p>
+                <p><strong>Frameworks:</strong> React Native, Flutter, Swift, Kotlin</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+
+        <div class="detail-page" id="techquiz">
+            <div class="detail-title">Tech Quiz Competition</div>
+            <div class="detail-content">
+                <h3>Test Your Technical Knowledge</h3>
+                <p>Compete with other tech enthusiasts in this exciting quiz competition covering programming, algorithms, system design, and emerging technologies.</p>
+                <p><strong>Date:</strong> Every Friday</p>
+                <p><strong>Prize Pool:</strong> ₹50,000</p>
+                <p><strong>Categories:</strong> Programming, AI/ML, Web Dev, Mobile Dev, DevOps</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+
+        <div class="detail-page" id="hackathon">
+            <div class="detail-title">Hackathon</div>
+            <div class="detail-content">
+                <h3>48-Hour Coding Marathon</h3>
+                <p>Join developers, designers, and innovators for an intensive 48-hour hackathon. Build innovative solutions to real-world problems and compete for amazing prizes.</p>
+                <p><strong>Duration:</strong> 48 hours</p>
+                <p><strong>Team Size:</strong> 2-4 members</p>
+                <p><strong>Grand Prize:</strong> ₹1,00,000 + Internship opportunities</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+
+        <div class="detail-page" id="codegame">
+            <div class="detail-title">Code Game Challenge</div>
+            <div class="detail-content">
+                <h3>Competitive Programming Arena</h3>
+                <p>Put your coding skills to the test in our interactive coding challenges. Solve algorithmic problems, optimize solutions, and climb the leaderboard.</p>
+                <p><strong>Format:</strong> Online rounds + Final</p>
+                <p><strong>Difficulty:</strong> Easy to Expert</p>
+                <p><strong>Languages:</strong> Python, Java, C++, JavaScript</p>
+            </div>
+            <button class="back-button" onclick="goHome()">← Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        function showDetail(category) {
+            // Hide home page
+            document.getElementById('homePage').classList.add('hidden');
+            
+            // Hide all detail pages
+            const detailPages = document.querySelectorAll('.detail-page');
+            detailPages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected detail page
+            document.getElementById(category).classList.add('active');
+        }
+
+        function goHome() {
+            // Show home page
+            document.getElementById('homePage').classList.remove('hidden');
+            
+            // Hide all detail pages
+            const detailPages = document.querySelectorAll('.detail-page');
+            detailPages.forEach(page => {
+                page.classList.remove('active');
+            });
+        }
+
+        function showSection(section) {
+            // Remove active class from all nav pills
+            const navPills = document.querySelectorAll('.nav-pill');
+            navPills.forEach(pill => {
+                pill.classList.remove('active');
+            });
+            
+            // Add active class to clicked nav pill
+            event.target.classList.add('active');
+            
+            // You can add logic here to filter content based on section
+            console.log('Showing section:', section);
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effects to buttons
+            const buttons = document.querySelectorAll('.category-item, .nav-pill, .add-button, .nav-icon, .scroll-down');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+
+            // Scroll down button functionality
+            document.querySelector('.scroll-down').addEventListener('click', function() {
+                window.scrollBy({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

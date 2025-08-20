@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNECT - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f2e8 0%, #e8dcc6 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Complex sketchy background pattern with more elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500' viewBox='0 0 500 500'%3E%3Cdefs%3E%3Cstyle%3E.sketch%7Bfill:none;stroke:%23c4b59a;stroke-width:1.8;opacity:0.35%7D.text-sketch%7Bfill:%23c4b59a;opacity:0.25;font-family:Arial%7D%3C/style%3E%3C/defs%3E%3Cg class='sketch'%3E%3C!-- Multiple arrows in various directions --%3E%3Cpath d='M60,60 L90,30 M90,30 L80,35 M90,30 L85,40' /%3E%3Cpath d='M160,90 L190,60 M190,60 L180,65 M190,60 L185,70' /%3E%3Cpath d='M260,130 L290,100 M290,100 L280,105 M290,100 L285,110' /%3E%3Cpath d='M360,170 L390,140 M390,140 L380,145 M390,140 L385,150' /%3E%3Cpath d='M110,220 L80,190 M80,190 L90,195 M80,190 L85,200' /%3E%3Cpath d='M310,270 L280,240 M280,240 L290,245 M280,240 L285,250' /%3E%3Cpath d='M40,320 L70,350 M70,350 L60,345 M70,350 L65,340' /%3E%3Cpath d='M200,380 L230,410 M230,410 L220,405 M230,410 L225,400' /%3E%3Cpath d='M400,320 L370,290 M370,290 L380,295 M370,290 L375,300' /%3E%3C!-- Curved wavy lines --%3E%3Cpath d='M30,120 Q50,100 70,120 T110,120' /%3E%3Cpath d='M130,160 Q150,140 170,160 T210,160' /%3E%3Cpath d='M230,200 Q250,180 270,200 T310,200' /%3E%3Cpath d='M40,270 Q60,250 80,270 T120,270' /%3E%3Cpath d='M140,310 Q160,290 180,310 T220,310' /%3E%3Cpath d='M240,350 Q260,330 280,350 T320,350' /%3E%3Cpath d='M340,390 Q360,370 380,390 T420,390' /%3E%3C!-- Complex wavy patterns --%3E%3Cpath d='M50,170 Q70,150 90,170 Q110,190 130,170 Q150,150 170,170' /%3E%3Cpath d='M190,220 Q210,200 230,220 Q250,240 270,220 Q290,200 310,220' /%3E%3Cpath d='M70,320 Q90,300 110,320 Q130,340 150,320 Q170,300 190,320' /%3E%3Cpath d='M320,280 Q340,260 360,280 Q380,300 400,280 Q420,260 440,280' /%3E%3C!-- Circles and ovals of various sizes --%3E%3Ccircle cx='330' cy='90' r='15' /%3E%3Ccircle cx='90' cy='340' r='18' /%3E%3Ccircle cx='210' cy='60' r='12' /%3E%3Ccircle cx='370' cy='270' r='10' /%3E%3Ccircle cx='120' cy='400' r='14' /%3E%3Ccircle cx='450' cy='150' r='11' /%3E%3Cellipse cx='130' cy='200' rx='25' ry='15' /%3E%3Cellipse cx='290' cy='340' rx='18' ry='28' /%3E%3Cellipse cx='380' cy='120' rx='20' ry='12' /%3E%3C!-- Hearts scattered around --%3E%3Cpath d='M210,320 C210,315 215,310 220,315 C225,310 230,315 230,320 C230,330 220,340 220,340 C220,340 210,330 210,320 Z' /%3E%3Cpath d='M350,180 C350,175 355,170 360,175 C365,170 370,175 370,180 C370,190 360,200 360,200 C360,200 350,190 350,180 Z' /%3E%3Cpath d='M80,80 C80,75 85,70 90,75 C95,70 100,75 100,80 C100,90 90,100 90,100 C90,100 80,90 80,80 Z' /%3E%3C!-- Rectangles and squares --%3E%3Crect x='260' y='40' width='35' height='25' /%3E%3Crect x='100' y='280' width='30' height='30' /%3E%3Crect x='330' y='320' width='40' height='20' /%3E%3Crect x='420' y='200' width='25' height='35' /%3E%3Crect x='160' y='420' width='45' height='15' /%3E%3C!-- More complex arrows --%3E%3Cpath d='M380,330 L350,360 M350,360 L360,355 M350,360 L355,350' /%3E%3Cpath d='M50,50 L20,80 M20,80 L30,75 M20,80 L25,70' /%3E%3Cpath d='M400,400 L370,370 M370,370 L380,375 M370,370 L375,380' /%3E%3Cpath d='M180,30 L150,60 M150,60 L160,55 M150,60 L155,50' /%3E%3C!-- Smiley faces --%3E%3Ccircle cx='250' cy='450' r='25' /%3E%3Ccircle cx='240' cy='440' r='3' fill='%23c4b59a' /%3E%3Ccircle cx='260' cy='440' r='3' fill='%23c4b59a' /%3E%3Cpath d='M235,460 Q250,470 265,460' /%3E%3C!-- Additional squiggly lines --%3E%3Cpath d='M320,120 Q340,100 360,120 Q380,140 400,120' /%3E%3Cpath d='M30,370 Q50,350 70,370 Q90,390 110,370' /%3E%3Cpath d='M210,270 Q230,250 250,270 Q270,290 290,270' /%3E%3Cpath d='M150,100 Q170,80 190,100 Q210,120 230,100' /%3E%3C!-- More geometric shapes --%3E%3Cpolygon points='420,80 435,100 420,120 405,100' /%3E%3Cpolygon points='60,200 75,220 60,240 45,220' /%3E%3C/g%3E%3C!-- Text elements like @, #, $, %, numbers --%3E%3Ctext x='60' y='400' class='text-sketch' font-size='24'%3E@%3C/text%3E%3Ctext x='170' y='50' class='text-sketch' font-size='28'%3E$%3C/text%3E%3Ctext x='320' y='380' class='text-sketch' font-size='26'%3E%25%3C/text%3E%3Ctext x='400' y='220' class='text-sketch' font-size='24'%3E%26%3C/text%3E%3Ctext x='30' y='220' class='text-sketch' font-size='30'%3E%23%3C/text%3E%3Ctext x='380' y='60' class='text-sketch' font-size='22'%3E?%3C/text%3E%3Ctext x='60' y='60' class='text-sketch' font-size='26'%3E!%3C/text%3E%3Ctext x='160' y='370' class='text-sketch' font-size='20'%3E?%3C/text%3E%3Ctext x='280' y='480' class='text-sketch' font-size='32'%3Eyes!%3C/text%3E%3Ctext x='350' y='450' class='text-sketch' font-size='18'%3ENO%3C/text%3E%3Ctext x='120' y='480' class='text-sketch' font-size='20'%3Eoh%3C/text%3E%3C!-- Numbers scattered --%3E%3Ctext x='40' y='450' class='text-sketch' font-size='18'%3E5%3C/text%3E%3Ctext x='100' y='40' class='text-sketch' font-size='22'%3E4%3C/text%3E%3Ctext x='300' y='50' class='text-sketch' font-size='20'%3E6%3C/text%3E%3Ctext x='450' y='400' class='text-sketch' font-size='24'%3E7%3C/text%3E%3Ctext x='20' y='300' class='text-sketch' font-size='16'%3E8%3C/text%3E%3Ctext x='200' y='480' class='text-sketch' font-size='26'%3E9%3C/text%3E%3Ctext x='480' y='100' class='text-sketch' font-size='28'%3E0%3C/text%3E%3Ctext x='150' y='250' class='text-sketch' font-size='45'%3E%23%3C/text%3E%3Ctext x='250' y='150' class='text-sketch' font-size='35'%3E%23%3C/text%3E%3Ctext x='380' y='250' class='text-sketch' font-size='40'%3E%23%3C/text%3E%3Ctext x='50' y='150' class='text-sketch' font-size='38'%3E%23%3C/text%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        /* KNECT Logo */
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            height: 60px;
+            width: auto;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Login Form Container */
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2c5aa0, #4a7bc8);
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Welcome Message */
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            background: rgba(200, 200, 200, 0.3);
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #ff8fa3, #ff6b8a);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #e85a7a;
+            box-shadow: 0 0 0 3px rgba(232, 90, 122, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            text-align: right;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #4a7bc8;
+            font-size: 12px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #2c5aa0;
+        }
+
+        /* Remember Me Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2d5016, #4a7c29);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(45, 80, 22, 0.3);
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #4a7c29, #5d8f35);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(45, 80, 22, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Sign Up Section */
+        .signup-section {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .signup-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link {
+            color: #4a7bc8;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link:hover {
+            color: #2c5aa0;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .login-container {
+                padding: 30px 25px;
+                margin: 20px;
+            }
+            
+            .logo {
+                position: static;
+                text-align: center;
+                margin-bottom: 30px;
+                height: 50px;
+            }
+            
+            .welcome-title {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+            
+            .form-input {
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+            
+            .login-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        /* Loading Animation */
+        .login-container {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Validation Styles */
+        .form-input.error {
+            border-color: #ff4444;
+            background: linear-gradient(135deg, #ff6b6b, #ff4444);
+        }
+
+        .form-input.success {
+            border-color: #4CAF50;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- KNECT Logo -->
+        <div class="logo">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 300'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234a7bc8'/%3E%3Cstop offset='100%25' stop-color='%232c5aa0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='20' y='60' width='472' height='180' rx='30' fill='%23000' stroke='%23333' stroke-width='3'/%3E%3Crect x='25' y='65' width='462' height='170' rx='25' fill='%23222' stroke='%234a90e2' stroke-width='2'/%3E%3Crect x='30' y='70' width='452' height='160' rx='20' fill='url(%23bg)'/%3E%3Ctext x='256' y='180' font-family='Arial Black, Arial' font-size='80' font-weight='900' text-anchor='middle' fill='white' stroke='%23000' stroke-width='2'%3EKNECT%3C/text%3E%3C/svg%3E" alt="KNECT Logo">
+        </div>
+
+        <!-- Login Form Container -->
+        <div class="login-container">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <div class="welcome-title">Welcome back!</div>
+                <div class="welcome-subtitle">Enter your Credentials to access your account</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <!-- Licet ID Field -->
+                <div class="form-group">
+                    <label class="form-label" for="licetId">Licet ID</label>
+                    <input type="text" id="licetId" name="licetId" class="form-input" placeholder="Enter your Licet ID" required>
+                    <div class="error-message" id="licetIdError">Please enter a valid Licet ID</div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter your Password" required>
+                    <div class="error-message" id="passwordError">Please enter your password</div>
+                </div>
+
+                <!-- Forgot Password -->
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">forgot password</a>
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember for 30 days</label>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="login-btn" id="loginBtn">Login</button>
+            </form>
+
+            <!-- Sign Up Section -->
+            <div class="signup-section">
+                <span class="signup-text">Don't have an account?</span>
+                <a href="#" class="signup-link" id="signUpLink">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form elements
+        const loginForm = document.getElementById('loginForm');
+        const licetIdInput = document.getElementById('licetId');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const signUpLink = document.getElementById('signUpLink');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            // Reset previous error states
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+
+            // Validate Licet ID
+            if (!licetIdInput.value.trim()) {
+                licetIdInput.classList.add('error');
+                document.getElementById('licetIdError').style.display = 'block';
+                isValid = false;
+            } else if (licetIdInput.value.trim().length < 3) {
+                licetIdInput.classList.add('error');
+                document.getElementById('licetIdError').textContent = 'Licet ID must be at least 3 characters';
+                document.getElementById('licetIdError').style.display = 'block';
+                isValid = false;
+            } else {
+                licetIdInput.classList.add('success');
+            }
+
+            // Validate Password
+            if (!passwordInput.value.trim()) {
+                passwordInput.classList.add('error');
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            } else if (passwordInput.value.trim().length < 6) {
+                passwordInput.classList.add('error');
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            } else {
+                passwordInput.classList.add('success');
+            }
+
+            return isValid;
+        }
+
+        // Real-time validation
+        licetIdInput.addEventListener('input', function() {
+            if (this.value.trim().length >= 3) {
+                this.classList.remove('error');
+                this.classList.add('success');
+                document.getElementById('licetIdError').style.display = 'none';
+            }
+        });
+
+        passwordInput.addEventListener('input', function() {
+            if (this.value.trim().length >= 6) {
+                this.classList.remove('error');
+                this.classList.add('success');
+                document.getElementById('passwordError').style.display = 'none';
+            }
+        });
+
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // Simulate login process
+                loginBtn.textContent = 'Logging in...';
+                loginBtn.disabled = true;
+                
+                setTimeout(() => {
+                    const licetId = licetIdInput.value.trim();
+                    const password = passwordInput.value.trim();
+                    const rememberMe = rememberMeCheckbox.checked;
+                    
+                    // Simulate successful login
+                    alert(`Login successful!\nLicet ID: ${licetId}\nRemember me: ${rememberMe ? 'Yes' : 'No'}`);
+                    
+                    // Reset form
+                    loginForm.reset();
+                    document.querySelectorAll('.form-input').forEach(input => {
+                        input.classList.remove('error', 'success');
+                    });
+                    
+                    loginBtn.textContent = 'Login';
+                    loginBtn.disabled = false;
+                    
+                    // In a real application, you would redirect to dashboard
+                    // window.location.href = '/dashboard';
+                }, 1500);
+            }
+        });
+
+        // Forgot password functionality
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const email = prompt('Enter your registered email address:');
+            if (email && email.includes('@')) {
+                alert('Password reset link has been sent to your email address.');
+            } else if (email) {
+                alert('Please enter a valid email address.');
+            }
+        });
+
+        // Sign up link functionality
+        signUpLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Redirecting to Sign Up page...');
+            // In a real application, you would redirect to sign up page
+            // window.location.href = '/signup';
+        });
+
+        // Remember me functionality
+        rememberMeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                console.log('User will be remembered for 30 days');
+            } else {
+                console.log('User session will expire when browser closes');
+            }
+        });
+
+        // Auto-focus on first input
+        window.addEventListener('load', function() {
+            licetIdInput.focus();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Enhanced security - prevent form data from being stored in browser history
+        window.addEventListener('beforeunload', function() {
+            passwordInput.value = '';
+        });
+
+        // Input formatting for Licet ID
+        licetIdInput.addEventListener('input', function() {
+            // Convert to uppercase and remove special characters
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
+
+        // Password strength indicator (visual feedback)
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const strengthIndicator = document.querySelector('.password-strength') || createStrengthIndicator();
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            
+            updateStrengthIndicator(strengthIndicator, strength);
+        });
+
+        function createStrengthIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'password-strength';
+            indicator.style.cssText = `
+                height: 4px;
+                background: #eee;
+                border-radius: 2px;
+                margin-top: 5px;
+                overflow: hidden;
+            `;
+            passwordInput.parentNode.appendChild(indicator);
+            return indicator;
+        }
+
+        function updateStrengthIndicator(indicator, strength) {
+            const colors = ['#ff4444', '#ff8800', '#ffaa00', '#88cc00', '#44aa00'];
+            const widths = ['20%', '40%', '60%', '80%', '100%'];
+            
+            if (strength > 0) {
+                indicator.style.background = `linear-gradient(to right, ${colors[strength - 1]} ${widths[strength - 1]}, #eee ${widths[strength - 1]})`;
+            } else {
+                indicator.style.background = '#eee';
+            }
+        }
+    </script>
+</body>
+</html>
