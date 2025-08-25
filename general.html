@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KNECT - Chat Interface</title>
+  <link rel="stylesheet" href="../Knct/style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url(../img/bg.jpg) center center / cover no-repeat fixed;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M20,20 Q30,10 40,20 T60,20' stroke='%23ddd' fill='none' stroke-width='1'/%3E%3Ccircle cx='80' cy='30' r='5' fill='%23e0e0e0'/%3E%3Cpath d='M10,60 L20,50 L30,60' stroke='%23ddd' fill='none' stroke-width='1'/%3E%3C/svg%3E");
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 10;
+    }
+
+    .logo {
+      background: none;
+    }
+
+    .general-chat-btn {
+      background: linear-gradient(135deg, #f7868d);
+      color: #333;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .general-chat-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg,#f7868d, #f7868d);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #333;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .profile-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Sidebar */
+    .sidebar {
+       width: 80px;
+            margin-top: 100px;
+            height: 70%;
+            background: #52796f; ;
+            border-radius: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 100px;
+      gap: 20px;
+      z-index: 5;
+    }
+
+    .sidebar-btn {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #ff6b9d, #f7868d);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 24px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-btn.active {
+      background: #333;
+      color: #ff6b9d;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 100px 20px 20px 20px;
+    }
+
+    /* Chat area */
+    .chat-area {
+      flex: 1;
+      background: linear-gradient(135deg, #52796f);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 70%;
+      margin: auto;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 60%;
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .message.left {
+      background: #f0e8d8;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    .message.right {
+      background: #8b7355;
+      color: white;
+      align-self: flex-end;
+    }
+
+    /* Input row wrapper */
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 70%;
+      margin: auto;
+    }
+
+    /* Input area box */
+    .input-area {
+      flex: 1;
+      background: #333;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      gap: 15px;
+    }
+
+    .emoji-btn,
+    .send-btn,
+    .action-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .emoji-btn {
+      background: transparent;
+      border: 2px solid #f7868d;
+      font-size: 20px;
+    }
+
+    .emoji-btn:hover {
+      background: #f7868d;
+      transform: scale(1.1);
+    }
+
+    .send-btn {
+      background: #4a9b8e;
+      border: none;
+      font-size: 20px;
+      color: white;
+    }
+
+    .send-btn:hover {
+      background: #6bb6a8;
+      transform: scale(1.1);
+    }
+
+    .message-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #999;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+      border: 2px solid #333;
+      font-size: 18px;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .back-btn {
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .sidebar-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .message {
+        max-width: 80%;
+        font-size: 14px;
+      }
+
+      .input-row {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <img src="../img/KNectlogo.png" alt="KNECT Logo" style="height:60px;" />
+      </div>
+      <button class="general-chat-btn">GENERAL CHAT</button>
+      <div class="profile-btn">👤</div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" role="navigation" aria-label="Main navigation">
+      <a href="sessions.html" class="sidebar-btn" data-page="video" title="Video Sessions">📹</a>
+      <a href="notes.html" class="sidebar-btn" data-page="files" title="Study Materials">📝</a>
+      <a href="events.html" class="sidebar-btn" data-page="audio" title="Events and Announcements">📢</a>
+      <a href="collab.html" class="sidebar-btn" data-page="github" title="Project Collabrations">🐱</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Chat Area -->
+      <div class="chat-area">
+        <div class="message left">Drama club play Friday 🎭</div>
+        <div class="message left">Free entry?</div>
+        <div class="message right">Or stand again? 😒</div>
+        <div class="message right">Food stalls there?</div>
+      </div>
+
+      <!-- Input Row: text, poll button, back button inline -->
+      <div class="input-row">
+        <!-- Input Area -->
+        <div class="input-area">
+          <button class="emoji-btn">😊</button>
+          <input type="text" class="message-input" placeholder="Type message here..." />
+          <button class="send-btn">▶</button>
+        </div>
+        <!-- Poll button -->
+        <button class="action-btn poll-btn">📊</button>
+        <!-- Back button -->
+        <button class="action-btn back-btn">↩</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar
+    const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+    sidebarButtons.forEach(b => {
+      b.addEventListener('click', () => {
+        sidebarButtons.forEach(btn => btn.classList.remove('active'));
+        b.classList.add('active');
+      });
+    });
+
+    // Send message
+    const messageInput = document.querySelector('.message-input');
+    const sendBtn = document.querySelector('.send-btn');
+    const chatArea = document.querySelector('.chat-area');
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (text) {
+        const msg = document.createElement('div');
+        msg.className = 'message right';
+        msg.textContent = text;
+        chatArea.appendChild(msg);
+        messageInput.value = '';
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+    }
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Emoji button
+    const emojiBtn = document.querySelector('.emoji-btn');
+    emojiBtn.addEventListener('click', () => {
+      messageInput.value += '😊';
+      messageInput.focus();
+    });
+
+    // Poll button functionality
+    const pollBtn = document.querySelector('.poll-btn');
+    pollBtn.addEventListener('click', () => {
+      const question = prompt('Enter your poll question:');
+      if (!question) return;
+
+      const optionsRaw = prompt(
+        'Enter poll options separated by commas (e.g. Yes,No,Maybe):'
+      );
+      if (!optionsRaw) return;
+
+      const options = optionsRaw
+        .split(',')
+        .map(o => o.trim())
+        .filter(o => o.length > 0);
+      if (options.length < 2) {
+        alert('Please enter at least two poll options.');
+        return;
+      }
+
+      let pollMessage = `📊 Poll: ${question}\nOptions:\n`;
+      options.forEach((opt, idx) => {
+        pollMessage += `${idx + 1}. ${opt}\n`;
+      });
+
+      const pollDiv = document.createElement('div');
+      pollDiv.className = 'message left';
+      pollDiv.textContent = pollMessage.trim();
+      chatArea.appendChild(pollDiv);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    });
+
+    // General chat button
+    document.querySelector('.general-chat-btn').addEventListener('click', () => {
+      alert('Switched to General Chat!');
+    });
+
+    // Profile button
+    document.querySelector('.profile-btn').addEventListener('click', () => {
+      alert('Profile settings coming soon!');
+    });
+
+    // Action buttons for back button
+    const actionBtns = document.querySelectorAll('.action-btn');
+    actionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('back-btn')) {
+          alert('Going back...');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
