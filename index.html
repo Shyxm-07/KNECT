@@ -27,7 +27,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url(../img/) center center / cover no-repeat fixed;
+            background: url("./img/pattern.png") center center / cover no-repeat fixed;
             z-index: 0;
         }
 
@@ -36,9 +36,9 @@
             z-index: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;   /* 👈 push content to top */
             min-height: 100vh;
-            padding: 20px;
+            padding: 80px 20px 20px;   /* 👈 add top padding */
         }
 
         .logo {
@@ -277,7 +277,7 @@
     </style>
 </head>
 <body>
-    <img src="./img/KNectlogo.png" alt="KNECT Logo" style="height:80px;">
+    <img src="./img/KNectlogo.png" alt="KNECT Logo" style="height:80px; position:absolute; top:40px; left:40px;">
     
     <div class="container">
         <div class="login-container">
@@ -395,26 +395,7 @@
                 
                 // Simulate loading and then navigate
                 setTimeout(() => {
-                    // In a real application, you would navigate to your dashboard
-                    // For demo purposes, we'll try to navigate to a dashboard.html
-                    // If it doesn't exist, we'll show the success page
-                    try {
-                        window.location.href = 'general.html';
-                    } catch (error) {
-                        // Fallback to success page if dashboard.html doesn't exist
-                        hideLoadingState();
-                        loginFormContainer.style.display = 'none';
-                        successPage.style.display = 'block';
-                        
-                        // Add success animation
-                        successPage.style.opacity = '0';
-                        successPage.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            successPage.style.transition = 'all 0.5s ease';
-                            successPage.style.opacity = '1';
-                            successPage.style.transform = 'translateY(0)';
-                        }, 100);
-                    }
+                    window.location.href = 'general.html';
                 }, 1500);
             } else {
                 // Invalid credentials
@@ -451,29 +432,22 @@
 
         // Navigation functions
         function navigateToSignup() {
-            // Show loading effect on signup link
             signupLink.style.opacity = '0.6';
             signupLink.style.pointerEvents = 'none';
-            
-            // Navigate to signup page after brief delay
             setTimeout(() => {
                 window.location.href = 'signup.html';
             }, 300);
         }
 
         function navigateToForgotPassword() {
-            // Show loading effect on forgot password link
             forgotPasswordLink.style.opacity = '0.6';
             forgotPasswordLink.style.pointerEvents = 'none';
-            
-            // Navigate to forgot password page after brief delay
             setTimeout(() => {
                 window.location.href = 'forgot-password.html';
             }, 300);
         }
 
         function goToDashboard() {
-            // Navigate to dashboard page
             window.location.href = 'general.html';
         }
 
@@ -490,41 +464,6 @@
             loginBtn.textContent = 'Login';
             loginBtn.disabled = false;
         }
-
-        // Alternative navigation methods you can use:
-
-        // Method 1: Direct navigation (current implementation)
-        function navigateToDashboard() {
-            window.location.href = 'general.html';
-        }
-
-        // Method 2: Using window.open() for new tab
-        function openDashboardInNewTab() {
-            window.open('general.html', '_blank');
-        }
-
-        // Method 3: Using history API for SPA-like behavior
-        function navigateWithHistory() {
-            history.pushState({page: 'dashboard'}, 'Dashboard', 'general.html');
-            // Then you would load dashboard content dynamically
-        }
-
-        // Method 4: Using anchor tag navigation
-        function createNavigationLink() {
-            const link = document.createElement('a');
-            link.href = '../general.html';
-            link.click();
-        }
-
-        // Demo credentials helper (you can remove this in production)
-        console.log('Demo credentials:');
-        console.log('Licet ID: admin');
-        console.log('Password: password123');
-        console.log('');
-        console.log('Navigation pages to create:');
-        console.log('- signup.html (for Sign Up link)');
-        console.log('- forgot-password.html (for Forgot Password link)');
-        console.log('- general.html (for successful login)');
     </script>
 </body>
 </html>
