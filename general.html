@@ -93,11 +93,13 @@
 
     /* Sidebar */
     .sidebar {
-       width: 80px;
+       /* width: 80px;
             margin-top: 100px;
-            height: 70%;
+            height: 50%;
             background: #52796f; ;
-            border-radius: 25px;
+            border-radius: 25px; */
+      margin-left: 20px;
+      margin-top: 70px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -253,6 +255,29 @@
     .back-btn {
     }
 
+    /* Floating back button */
+    .floating-back-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;         /* changed from left: 50%; */
+      left: auto;          /* reset left */
+      transform: none;     /* remove translateX(-50%) */
+      background: #f7868d;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+      z-index: 10;
+    }
+
+    .floating-back-btn:hover {
+      transform: scale(1.05); /* removed translateX(-50%) */
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .sidebar {
@@ -308,19 +333,22 @@
       <!-- Input Row: text, poll button, back button inline -->
       <div class="input-row">
         <!-- Input Area -->
-        <div class="input-area">
-          <button class="emoji-btn">😊</button>
-          <input type="text" class="message-input" placeholder="Type message here..." />
-          <button class="send-btn">▶</button>
-        </div>
-        <!-- Poll button -->
-        <button class="action-btn poll-btn">📊</button>
-        <!-- Back button -->
-        <button class="action-btn back-btn">↩</button>
+        <div class="input-area" style="margin-top: 15px;">
+  <button class="emoji-btn">😊</button>
+  <input type="text" class="message-input" placeholder="Type message here..." />
+  <button class="send-btn">➤</button>
+</div>
+
+<!-- Removed back button -->
+<div class="input-actions" style="margin-top: 15px;">
+  <button class="action-btn poll-btn" style="width:50px; height:50px; font-size:22px;">📊</button>
+</div>
+
+
       </div>
     </div>
-  </div>
-
+    <!-- Add back button as floating button -->
+    <button class="action-btn back-btn floating-back-btn">↩</button>
   <script>
     // Sidebar
     const sidebarButtons = document.querySelectorAll('.sidebar-btn');
@@ -380,9 +408,9 @@
         return;
       }
 
-      let pollMessage = `📊 Poll: ${question}\nOptions:\n`;
+      let pollMessage = 📊 Poll: ${question}\nOptions:\n;
       options.forEach((opt, idx) => {
-        pollMessage += `${idx + 1}. ${opt}\n`;
+        pollMessage += ${idx + 1}. ${opt}\n;
       });
 
       const pollDiv = document.createElement('div');
